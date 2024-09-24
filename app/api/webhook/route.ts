@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { sendEmail } from '@/app/lib/email';
-import { sendSMS } from '@/app/lib/sms';
+// import { sendEmail } from '@/app/lib/email';
+// import { sendSMS } from '@/app/lib/sms';
 import { z } from 'zod';
 
-const formSchema = z.object({
-  email: z.string().email(),
-  phone: z.string().min(10),
-  name: z.string().min(1),
-});
+// const formSchema = z.object({
+//   email: z.string().email(),
+//   phone: z.string().min(10),
+//   name: z.string().min(1),
+// });
 
 export async function POST(request: NextRequest) {
   console.log('Webhook received from Jotform');
