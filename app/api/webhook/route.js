@@ -6,8 +6,15 @@ export async function POST(request) {
 
     console.log('Webhook received');
   try {
+
+    const buffers = [];
+    for await (const chunk of req) {
+      buffers.push(chunk);
+    }
+    const data = Buffer.concat(buffers).toString();
+
     // Parse the form data from the request body
-    const formData = request.body;
+    const formData = JSON.parse(data);
     console.log('formData: ', formData);
 
     
