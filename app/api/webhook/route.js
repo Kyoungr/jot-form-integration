@@ -8,7 +8,7 @@ export async function POST(request) {
   try {
 
     const buffers = [];
-    for await (const chunk of req) {
+    for await (const chunk of request) {
       buffers.push(chunk);
     }
     const data = Buffer.concat(buffers).toString();
