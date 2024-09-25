@@ -9,12 +9,20 @@ import { z } from 'zod';
 //   name: z.string().min(1),
 // });
 
+// Add this new function to handle GET requests
+export async function GET() {
+  return NextResponse.json(
+    { message: 'Webhook endpoint is active' },
+    { status: 200 }
+  );
+}
+
 export async function POST(request: NextRequest) {
   console.log('Webhook received from Jotform');
 
   try {
     // Parse the form data from the request body
-    const formData = await parseFormData(request);
+    const formData = await parseRequestData(request);
     console.log('formData: ', formData);
 
     // const validatedData = formSchema.parse({
@@ -26,7 +34,7 @@ export async function POST(request: NextRequest) {
     // await Promise.all([sendEmail(validatedData), sendSMS(validatedData)]);
 
     return NextResponse.json(
-      { message: 'Email and SMS sent successfully!' },
+      { message: 'Webhook received and processed successfully!' },
       { status: 200 }
     );
   } catch (error) {
@@ -41,20 +49,29 @@ export async function POST(request: NextRequest) {
   }
 }
 
-async function parseFormData(request: NextRequest): Promise<FormData> {
+async function parseRequestData(
+  request: NextRequest
+): Promise<Record<string, any>> {
   const contentType = request.headers.get('content-type');
-  if (
-    contentType &&
-    contentType.includes('application/x-www-form-urlencoded')
-  ) {
+  console.log('Content-Type:', contentType);
+
+  if (contentType?.includes('application/json')) {
+    return request.json();
+  } else if (contentType?.includes('application/x-www-form-urlencoded')) {
     const text = await request.text();
     const params = new URLSearchParams(text);
-    const formData = new FormData();
-    Array.from(params).forEach(([key, value]) => {
-      formData.append(key, value);
-    });
-    return formData;
+    return Object.fromEntries(params);
+  } else if (contentType?.includes('multipart/form-data')) {
+    const formData = await request.formData();
+    return Object.fromEntries(formData);
   } else {
-    return request.formData();
+    // If content type is not recognized, try to parse as text
+    const text = await request.text();
+    console.log('Raw request body:', text);
+    try {
+      return JSON.parse(text);
+    } catch {
+      return { rawData: text };
+    }
   }
 }
