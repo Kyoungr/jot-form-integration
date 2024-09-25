@@ -10,12 +10,12 @@ import { z } from 'zod';
 // });
 
 // Add this new function to handle GET requests
-export async function GET() {
-  return NextResponse.json(
-    { message: 'Webhook endpoint is active' },
-    { status: 200 }
-  );
-}
+// export async function GET() {
+//   return NextResponse.json(
+//     { message: 'Webhook endpoint is active' },
+//     { status: 200 }
+//   );
+// }
 
 export async function POST(request: NextRequest) {
   console.log('Webhook received from Jotform');
