@@ -49,9 +49,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-async function parseRequestData(
-  request: NextRequest
-): Promise<Record<string, any>> {
+async function parseRequestData(request: NextRequest) {
   const contentType = request.headers.get('content-type');
   console.log('Content-Type:', contentType);
 
