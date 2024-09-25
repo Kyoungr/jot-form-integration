@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-// import { sendEmail } from '@/app/lib/email';
-// import { sendSMS } from '@/app/lib/sms';
+import { sendEmail } from '@/app/lib/email';
+import { sendSMS } from '@/app/lib/sms';
 import { z } from 'zod';
 
 const formSchema = z.object({
@@ -35,7 +35,18 @@ export async function POST(request: NextRequest) {
     });
 
     console.log('Validated data:', validatedData);
-    // await Promise.all([sendEmail(validatedData), sendSMS(validatedData)]);
+
+    const emailData = {
+      email: validatedData.email,
+      name: `${validatedData.firstName} ${validatedData.lastName}`,
+    };
+
+    const smsData = {
+      phone: validatedData.phone,
+      name: `${validatedData.firstName} ${validatedData.lastName}`,
+    };
+
+    await Promise.all([sendEmail(emailData), sendSMS(smsData)]);
 
     return NextResponse.json(
       { message: 'Webhook received and processed successfully!' },
