@@ -19,6 +19,7 @@ import { z } from 'zod';
 
 export async function POST(request: NextRequest) {
   console.log('Webhook received from Jotform');
+  console.log('RawData: ', request);
 
   try {
     // Parse the form data from the request body
