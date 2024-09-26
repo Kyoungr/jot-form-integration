@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
 
     const smsData = {
       phone: formData['phonenumber[full]'],
-      name: `${formData['phonenumber[full]']} ${formData['name[last]']}`,
+      name: `${formData['name[first]']} ${formData['name[last]']}`,
     };
 
     await Promise.all([sendEmail(emailData), sendSMS(smsData)]);
