@@ -3,12 +3,12 @@ import { sendEmail } from '@/app/lib/email';
 import { sendSMS } from '@/app/lib/sms';
 import { z } from 'zod';
 
-const formSchema = z.object({
-  email: z.string().email(),
-  phone: z.string().min(10),
-  firstName: z.string().min(1),
-  lastName: z.string().min(1),
-});
+// const formSchema = z.object({
+//   email: z.string().email(),
+//   phone: z.string().min(10),
+//   firstName: z.string().min(1),
+//   lastName: z.string().min(1),
+// });
 
 // Add this new function to handle GET requests
 // export async function GET() {
@@ -27,23 +27,23 @@ export async function POST(request: NextRequest) {
     const formData = await parseRequestData(request);
     console.log('formData: ', formData);
 
-    const validatedData = formSchema.parse({
-      email: formData.email,
-      phone: formData['phonenumber[full]'],
-      firstName: formData['name[first]'],
-      lastName: formData['name[last]'],
-    });
+    // const validatedData = formSchema.parse({
+    //   email: formData.email,
+    //   phone: formData['phonenumber[full]'],
+    //   firstName: formData['name[first]'],
+    //   lastName: formData['name[last]'],
+    // });
 
-    console.log('Validated data:', validatedData);
+    // console.log('Validated data:', validatedData);
 
     const emailData = {
-      email: validatedData.email,
-      name: `${validatedData.firstName} ${validatedData.lastName}`,
+      email: formData.email,
+      name: `${formData['name[first]']} ${formData['name[last]']}`,
     };
 
     const smsData = {
-      phone: validatedData.phone,
-      name: `${validatedData.firstName} ${validatedData.lastName}`,
+      phone: formData['phonenumber[full]'],
+      name: `${formData['phonenumber[full]']} ${formData['name[last]']}`,
     };
 
     await Promise.all([sendEmail(emailData), sendSMS(smsData)]);
