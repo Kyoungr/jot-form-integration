@@ -14,6 +14,6 @@ export async function sendSMS({ phone, name }: SMSData) {
   await twilioClient.messages.create({
     body: `Hi ${name}, thank you for submitting the form! We'll reach out to you soon.`,
     from: process.env.TWILIO_PHONE_NUMBER,
-    to: phone,
+    to: `+1${phone}`,
   });
 }
