@@ -46,6 +46,9 @@ export async function POST(request: NextRequest) {
       name: `${formData['name[first]']} ${formData['name[last]']}`,
     };
 
+    console.log('emailData: ', emailData);
+    console.log('smsData: ', smsData);
+
     await Promise.all([sendEmail(emailData), sendSMS(smsData)]);
 
     return NextResponse.json(
