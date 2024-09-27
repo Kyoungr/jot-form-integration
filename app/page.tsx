@@ -41,14 +41,14 @@ export default function Home() {
               <CheckCircle className='text-green-500 w-16 h-16' />
             </div>
             <p className='text-center text-muted-foreground'>
-              We've successfully received your application. Thank you for taking
+              Weve successfully received your application. Thank you for taking
               the time to apply.
             </p>
-            <h3 className='font-semibold text-lg'>What's Next?</h3>
+            <h3 className='font-semibold text-lg'>Whats Next?</h3>
             <ul className='list-disc list-inside space-y-2 text-muted-foreground'>
               <li>Our team will carefully review your application</li>
               <li>We aim to respond within 5-7 business days</li>
-              <li>If selected, we'll contact you for next steps</li>
+              <li>If selected, well contact you for next steps</li>
             </ul>
           </CardContent>
           <CardFooter className='flex justify-center'>
