@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
     console.log('emailData: ', emailData);
     console.log('smsData: ', smsData);
 
-    await Promise.all([sendEmail(emailData), sendSMS(smsData)]);
+    // await Promise.all([sendEmail(emailData), sendSMS(smsData)]);
 
     return NextResponse.json(
       { message: 'Webhook received and processed successfully!' },
