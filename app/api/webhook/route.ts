@@ -22,6 +22,12 @@ export async function POST(request: NextRequest) {
   console.log('Webhook received from Jotform');
   console.log('RawData: ', request);
 
+  // Check if the request is coming from Jotform
+  const origin = request.headers.get('origin');
+  if (origin !== 'https://submit.jotform.com') {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+  }
+
   try {
     // Parse the form data from the request body
     const formData = await parseRequestData(request);
