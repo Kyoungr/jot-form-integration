@@ -18,6 +18,16 @@ import { z } from 'zod';
 //   );
 // }
 
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
+
+// Add this configuration to allow external POST requests
+export const dynamic = 'force-dynamic';
+export const runtime = 'edge';
+
 export async function POST(request: NextRequest) {
   console.log('Webhook received from Jotform');
   console.log('RawData: ', request);
