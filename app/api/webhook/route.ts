@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-// import { sendEmail } from '@/app/lib/email';
-// import { sendSMS } from '@/app/lib/sms';
+import { sendEmail } from '@/app/lib/email';
+import { sendSMS } from '@/app/lib/sms';
 import { z } from 'zod';
 
 // const formSchema = z.object({
@@ -19,18 +19,18 @@ import { z } from 'zod';
 // }
 
 // Add this configuration to allow external POST requests
-export const dynamic = 'force-dynamic';
-export const runtime = 'edge';
+// export const dynamic = 'force-dynamic';
+// export const runtime = 'edge';
 
 export async function POST(request: NextRequest) {
   console.log('Webhook received from Jotform');
   console.log('RawData: ', request);
 
   // Check if the request is coming from Jotform
-  const origin = request.headers.get('origin');
-  if (origin !== 'https://submit.jotform.com') {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
-  }
+  // const origin = request.headers.get('origin');
+  // if (origin !== 'https://submit.jotform.com') {
+  //   return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+  // }
 
   try {
     // Parse the form data from the request body
@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
     console.log('emailData: ', emailData);
     console.log('smsData: ', smsData);
 
-    // await Promise.all([sendEmail(emailData), sendSMS(smsData)]);
+    await Promise.all([sendEmail(emailData), sendSMS(smsData)]);
 
     return NextResponse.json(
       { message: 'Webhook received and processed successfully!' },
