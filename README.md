@@ -1,36 +1,107 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Next.js JotForm Integration API
+This repository contains a lightweight Next.js API that integrates JotForm with email and SMS services. The integration includes a webhook from the JotForm platform, Nodemailer for email automation, and Twilio for SMS notifications.
 
-## Getting Started
+## Features
+JotForm Webhook: Automatically triggers the workflow when a user submits a form.
+Nodemailer Integration: Sends a follow-up email to the user upon form submission.
+Twilio SMS Notification: Delivers an SMS notification to the user’s phone number.
+Getting Started
+Prerequisites
+Make sure you have the following tools installed:
 
-First, run the development server:
+Node.js (v14 or above)
+Next.js
+Nodemailer
+Twilio
+JotForm Account
+Installation
+Clone the repository:
 
-```bash
+bash
+
+Copy code
+
+git clone https://github.com/your-username/nextjs-jotform-integration.git
+
+cd nextjs-jotform-integration
+
+Install dependencies:
+
+bash
+Copy code
+
+npm install
+
+Create a .env.local file in the root directory and add the following environment variables:
+
+env
+Copy code
+# JotForm
+JOTFORM_API_KEY=your_jotform_api_key
+
+# Nodemailer (Example for Gmail, adapt based on your provider)
+EMAIL_HOST=smtp.gmail.com 
+
+EMAIL_PORT=465
+
+EMAIL_USER=your_email@example.com
+
+EMAIL_PASS=your_email_password
+
+# Twilio
+TWILIO_ACCOUNT_SID=your_twilio_account_sid
+
+TWILIO_AUTH_TOKEN=your_twilio_auth_token
+
+TWILIO_PHONE_NUMBER=your_twilio_phone_number
+
+# Run the development server:
+
+bash
+
+Copy code
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit http://localhost:3000 to view your API.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## JotForm Webhook Setup
+In your JotForm account, navigate to the Settings of the form you want to integrate.
+Under the Integrations section, 
+add a Webhook URL. 
+The URL should be your API endpoint,
+e.g., https://yourdomain.com/api/jotform.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Nodemailer Configuration
+Nodemailer is configured to send an email to the user after a form submission. 
+Make sure to replace the email provider details in the .env.local file with your own. 
+This example uses Gmail, but you can configure it with any SMTP provider.
 
-## Learn More
+Twilio SMS Notification
+Twilio is used to send SMS notifications to the user’s phone number provided in the form. 
+Ensure that your Twilio account is set up and your .env.local file has the correct credentials.
 
-To learn more about Next.js, take a look at the following resources:
+Usage
+Once everything is set up:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+A user submits a form via JotForm.
+The JotForm webhook triggers your Next.js API.
+The API sends a confirmation email to the user using Nodemailer.
+The API sends an SMS to the user using Twilio.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Example Workflow
+User submits the form on JotForm.
+JotForm webhook triggers an API call to /api/jotform.
+The API processes the submission, retrieves the user’s email and phone number, and sends both an email and an SMS notification.
+Project Structure
+/pages/api/jotform.js: Main API endpoint handling the webhook, email, and SMS logic.
+/lib/nodemailer.js: Nodemailer configuration and email-sending functionality.
+/lib/twilio.js: Twilio configuration and SMS-sending functionality.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Dependencies
+Next.js - React framework for building server-side rendered applications.
+Nodemailer - Email sending library.
+Twilio - SMS sending platform.
+JotForm API - API to integrate form submission data.
+## License
+This project is licensed under the MIT License. See the LICENSE file for details.
